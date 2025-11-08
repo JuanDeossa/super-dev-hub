@@ -1,14 +1,16 @@
-# Imagen base ligera
 FROM node:20-alpine
 
-# Directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de dependencias primero para aprovechar cache
+# Copiar archivos de dependencias
 COPY package*.json ./
 
-# Instalar solo dependencias de producción
-RUN npm ci --omit=dev
+# Instalar dependencias: usa npm ci si existe package-lock.json, si no hace npm install
+RUN if [ -f package-lock.json ]; then \
+      npm ci --omit=dev; \
+    else \
+      npm install --omit=dev; \
+    fi
 
 # Copiar el resto del código
 COPY . .
@@ -17,11 +19,9 @@ COPY . .
 RUN chown -R node:node /app
 USER node
 
-# Variables de entorno
 ENV NODE_ENV=production
 ENV PORT=8080
 
-# Puerto expuesto (ajustar si tu app usa otro)
 EXPOSE 8080
 
 # Comando por defecto (usa el script "start" de package.json)
