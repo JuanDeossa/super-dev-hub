@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import type { CustomJwtPayload } from "../types/jwt";
 
 export const AuthCallback = ({ onAuth }) => {
   const [searchParams] = useSearchParams();
@@ -11,7 +12,7 @@ export const AuthCallback = ({ onAuth }) => {
     if (token) {
       localStorage.setItem("accessToken", token);
       try {
-        const payload = jwtDecode(token);
+        const payload = jwtDecode<CustomJwtPayload>(token);
         onAuth({
           id: payload.id,
           email: payload.email,
