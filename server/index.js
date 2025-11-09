@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import { sequelize } from "./config/db.js";
 
 const PORT = process.env.PORT || 8080;
 const CLIENT_ORIGINS = process.env.CLIENT_ORIGINS.split(";;;") || [
@@ -32,3 +33,13 @@ app.get("/api/test", (_req, res) => {
     });
   }, DELAY_MS);
 });
+
+try {
+  await sequelize.sync({ alter: true });
+  console.log("Tablas sincronizadas correctamente");
+  app.listen(PORT, () => {
+    console.log(`Servidor backend escuchando en el puerto ${PORT}`);
+  });
+} catch (err) {
+  console.error("Error al sincronizar las tablas:", err);
+}
