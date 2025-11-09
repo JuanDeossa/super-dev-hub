@@ -11,7 +11,7 @@ export const Dashboard = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

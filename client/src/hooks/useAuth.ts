@@ -14,7 +14,7 @@ export const useAuth = () => {
   const { mutate: logout, isPending: isLoggingOut } = useMutation({
     mutationFn: async () => {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/auth/logout`,
+        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
         {
           method: "POST",
           credentials: "include", // Importante para enviar la cookie

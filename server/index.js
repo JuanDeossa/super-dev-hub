@@ -41,8 +41,8 @@ app.get("/api/test", (_req, res) => {
   }, DELAY_MS);
 });
 
-app.use("/auth", authRouter);
-app.use("/users", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 
 // Middleware global de manejo de errores
 app.use(errorHandler);
