@@ -1,7 +1,12 @@
-import "dotenv/config";
 import express from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
+import "dotenv/config";
+
 import { sequelize } from "./config/db.js";
+import { authRouter } from "./routes/authRoutes.js";
+import { userRouter } from "./routes/userRoutes.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const PORT = process.env.PORT || 8080;
 const CLIENT_ORIGINS = process.env.CLIENT_ORIGINS.split(";;;") || [
@@ -11,6 +16,8 @@ const CLIENT_ORIGINS = process.env.CLIENT_ORIGINS.split(";;;") || [
 const DELAY_MS = 1200;
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(
   cors({
@@ -33,6 +40,12 @@ app.get("/api/test", (_req, res) => {
     });
   }, DELAY_MS);
 });
+
+app.use("/auth", authRouter);
+app.use("/users", userRouter);
+
+// Middleware global de manejo de errores
+app.use(errorHandler);
 
 try {
   await sequelize.sync({ alter: true });
