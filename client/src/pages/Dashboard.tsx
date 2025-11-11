@@ -22,8 +22,8 @@ export const Dashboard = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        let errorMessage = "Error al obtener usuarios.";
-        if (data && data.message) {
+        const errorMessage = "Error al obtener usuarios.";
+        if (data?.message) {
           toast.error(data.message);
         }
         throw new Error(errorMessage);

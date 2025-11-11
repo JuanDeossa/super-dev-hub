@@ -10,6 +10,7 @@ export const AppRouter = () => {
       <Routes>
         {/* Rutas públicas */}
         <Route element={<PublicRoute user={user} />}>
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/auth/callback"

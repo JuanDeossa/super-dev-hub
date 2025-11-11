@@ -1,7 +1,7 @@
 import { toast as toast_ } from "sonner";
 
 export const toast = {
-  error: (message) => {
+  error: (message: string) => {
     toast_.error(message, {
       toasterId: "global",
       style: {

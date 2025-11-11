@@ -1,4 +1,11 @@
-export const UsersList = ({ users, isLoading, error, refetch }) => {
+type Props = {
+  users: { id: string; name: string; email: string }[];
+  isLoading: boolean;
+  error: Error | null;
+  refetch: () => void;
+};
+
+export const UsersList = ({ users, isLoading, error, refetch }: Props) => {
   const showList = !isLoading && !error && users.length > 0;
 
   return (

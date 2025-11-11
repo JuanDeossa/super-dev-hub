@@ -1,4 +1,12 @@
-export const AppHeader = ({ user, onLogout, isLoggingOut }) => {
+import type { User } from "../types/user.types";
+
+type Props = {
+  user: User | null;
+  onLogout: () => void;
+  isLoggingOut: boolean;
+};
+
+export const AppHeader = ({ user, onLogout, isLoggingOut }: Props) => {
   return (
     <header
       style={{

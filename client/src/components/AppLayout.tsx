@@ -1,7 +1,14 @@
 import { Outlet } from "react-router-dom";
 import { AppHeader } from "./";
+import type { User } from "../types/user.types";
 
-export const AppLayout = ({ user, onLogout, isLoggingOut }) => {
+type Props = {
+  user: User | null;
+  onLogout: () => void;
+  isLoggingOut: boolean;
+};
+
+export const AppLayout = ({ user, onLogout, isLoggingOut }: Props) => {
   return (
     <div
       style={{

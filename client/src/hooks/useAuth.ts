@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "../helpers/toast";
+import type { User } from "../types/user.types";
 
 export const useAuth = () => {
   // Estado local de autenticación (simulado)
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
 
-  const handleAuth = (userData) => {
+  const handleAuth = (userData: User) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   // Mutación para logout

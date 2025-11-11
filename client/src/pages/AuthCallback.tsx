@@ -2,8 +2,13 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import type { CustomJwtPayload } from "../types/jwt";
+import type { User } from "../types/user.types";
 
-export const AuthCallback = ({ onAuth }) => {
+type Props = {
+  onAuth: (user: User) => void;
+};
+
+export const AuthCallback = ({ onAuth }: Props) => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
