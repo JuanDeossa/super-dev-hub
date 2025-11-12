@@ -1,23 +1,11 @@
-import { useEffect } from "react";
-import { toast } from "../helpers/toast";
+type Props = {
+  handleLogin: () => void;
+};
 
-export const Login = () => {
+export const Login = ({ handleLogin }: Props) => {
   const handleGoogleLogin = () => {
-    // Redirige al backend para iniciar OAuth con Google
-    globalThis.location.href = `${
-      import.meta.env.VITE_API_URL
-    }/api/auth/google`;
+    handleLogin();
   };
-
-  useEffect(() => {
-    toast.error("Debugging login error");
-    const params = new URLSearchParams(globalThis.location.search);
-    const error = params.get("error");
-    if (error) {
-      // debugger;
-      toast.error(error);
-    }
-  }, []);
 
   return (
     <div

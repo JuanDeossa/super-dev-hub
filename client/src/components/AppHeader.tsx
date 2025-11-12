@@ -3,10 +3,9 @@ import type { User } from "../types/user.types";
 type Props = {
   user: User | null;
   onLogout: () => void;
-  isLoggingOut: boolean;
 };
 
-export const AppHeader = ({ user, onLogout, isLoggingOut }: Props) => {
+export const AppHeader = ({ user, onLogout }: Props) => {
   return (
     <header
       style={{
@@ -26,9 +25,7 @@ export const AppHeader = ({ user, onLogout, isLoggingOut }: Props) => {
       }}
     >
       <p>{user?.email}</p>
-      <button onClick={onLogout} disabled={isLoggingOut}>
-        {isLoggingOut ? "Cerrando sesión..." : "Cerrar sesión"}
-      </button>
+      <button onClick={onLogout}>Cerrar sesión</button>
     </header>
   );
 };

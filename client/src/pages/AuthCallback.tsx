@@ -1,41 +1,21 @@
 import { useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import type { CustomJwtPayload } from "../types/jwt";
+import { useNavigate } from "react-router-dom";
 import type { User } from "../types/user.types";
 
 type Props = {
-  onAuth: (user: User) => void;
+  user: User | null;
 };
 
-export const AuthCallback = ({ onAuth }: Props) => {
-  const [searchParams] = useSearchParams();
+export const AuthCallback = ({ user }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = searchParams.get("token");
-    if (token) {
-      localStorage.setItem("accessToken", token);
-      try {
-        const payload = jwtDecode<CustomJwtPayload>(token);
-        onAuth({
-          id: payload.id,
-          email: payload.email,
-          name: payload.name,
-          role: payload.role,
-          provider: payload.provider,
-          token: token,
-        });
-        navigate("/dashboard");
-      } catch (err) {
-        console.error("error de decodificación del token", err);
-        localStorage.removeItem("accessToken");
-        navigate("/login");
-      }
+    if (user) {
+      navigate("/dashboard");
     } else {
       navigate("/login");
     }
-  }, [searchParams, navigate, onAuth]);
+  }, [user, navigate]);
 
   return (
     <div style={{ textAlign: "center", marginTop: 80 }}>

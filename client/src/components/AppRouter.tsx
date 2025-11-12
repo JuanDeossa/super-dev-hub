@@ -4,31 +4,20 @@ import { PrivateRoute, PublicRoute, AppLayout } from ".";
 import { useAuth } from "../hooks";
 
 export const AppRouter = () => {
-  const { user, handleAuth, handleLogout, isLoggingOut } = useAuth();
+  const { user, handleLogin, handleLogout } = useAuth();
   return (
     <Router>
       <Routes>
         {/* Rutas públicas */}
         <Route element={<PublicRoute user={user} />}>
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/auth/callback"
-            element={<AuthCallback onAuth={handleAuth} />}
-          />
+          <Route path="/" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+          <Route path="/auth/callback" element={<AuthCallback user={user} />} />
         </Route>
 
         {/* Rutas privadas */}
         <Route element={<PrivateRoute user={user} />}>
-          <Route
-            element={
-              <AppLayout
-                user={user}
-                isLoggingOut={isLoggingOut}
-                onLogout={handleLogout}
-              />
-            }
-          >
+          <Route element={<AppLayout user={user} onLogout={handleLogout} />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Route>

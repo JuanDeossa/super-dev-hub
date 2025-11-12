@@ -5,10 +5,9 @@ import type { User } from "../types/user.types";
 type Props = {
   user: User | null;
   onLogout: () => void;
-  isLoggingOut: boolean;
 };
 
-export const AppLayout = ({ user, onLogout, isLoggingOut }: Props) => {
+export const AppLayout = ({ user, onLogout }: Props) => {
   return (
     <div
       style={{
@@ -19,7 +18,7 @@ export const AppLayout = ({ user, onLogout, isLoggingOut }: Props) => {
         fontFamily: "Segoe UI, Arial, sans-serif",
       }}
     >
-      <AppHeader user={user} isLoggingOut={isLoggingOut} onLogout={onLogout} />
+      <AppHeader user={user} onLogout={onLogout} />
       <main style={{ width: "100%", margin: "32px auto" }}>
         <Outlet />
       </main>

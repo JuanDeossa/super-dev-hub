@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "../helpers/toast";
 import type { User } from "../types/user.types";
 
 export const useAuth = () => {
@@ -10,43 +8,26 @@ export const useAuth = () => {
     return stored ? JSON.parse(stored) : null;
   });
 
-  const handleAuth = (userData: User) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
-  };
+  const handleLogin = () => {
+    const mockUser = {
+      id: "1",
+      name: "Usuario de Prueba",
+      email: "usuario@prueba.com",
+      provider: "google",
+      role: "user",
+      token: "fake-jwt-token",
+    };
 
-  // Mutación para logout
-  const { mutate: logout, isPending: isLoggingOut } = useMutation({
-    mutationFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/auth/logout`,
-        {
-          method: "POST",
-          credentials: "include", // Importante para enviar la cookie
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!res.ok) {
-        throw new Error("Error al cerrar sesión");
-      }
-      return res.json();
-    },
-    onSuccess: () => {
-      setUser(null);
-      localStorage.clear();
-    },
-    onError: (error) => {
-      console.error("Error during logout:", error);
-      toast.error("Error al cerrar sesión.");
-    },
-  });
+    setUser(mockUser);
+    localStorage.setItem("user", JSON.stringify(mockUser));
+  };
 
   // Llama a logoutMutation.mutate() para hacer logout
   const handleLogout = () => {
-    logout();
+    localStorage.clear();
+    setUser(null);
+    globalThis.location.href = `/login`;
   };
 
-  return { user, handleAuth, handleLogout, isLoggingOut };
+  return { user, handleLogout, handleLogin };
 };

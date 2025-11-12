@@ -4,7 +4,6 @@ import cors from "cors";
 import "dotenv/config";
 
 import { sequelize } from "./config/db.js";
-import { authRouter } from "./routes/authRoutes.js";
 import { userRouter } from "./routes/userRoutes.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 
@@ -41,7 +40,6 @@ app.get("/api/test", (_req, res) => {
   }, DELAY_MS);
 });
 
-app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 
 // Middleware global de manejo de errores
