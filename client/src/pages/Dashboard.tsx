@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { UsersList } from "../components";
-import { toast } from "../helpers/toast";
 
 export const Dashboard = () => {
   const {
@@ -23,9 +22,15 @@ export const Dashboard = () => {
 
       if (!res.ok) {
         const errorMessage = "Error al obtener usuarios.";
-        if (data?.message) {
-          toast.error(data.message);
+        if (
+          data?.error === "EXPIRED_TOKEN" &&
+          typeof data.message === "string"
+        ) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("user");
+          globalThis.location.href = `/login?error=${data.message}`;
         }
+
         throw new Error(errorMessage);
       }
       return data;

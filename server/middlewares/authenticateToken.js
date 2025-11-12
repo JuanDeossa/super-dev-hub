@@ -7,7 +7,7 @@ export function authenticateToken(req, res, next) {
 
   if (!token) {
     return res.status(401).json({
-      error: "No autorizado",
+      error: "INVALID_TOKEN",
       message: "No se proporcionó token de acceso.",
     });
   }

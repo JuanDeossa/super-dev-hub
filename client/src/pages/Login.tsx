@@ -1,8 +1,23 @@
+import { useEffect } from "react";
+import { toast } from "../helpers/toast";
+
 export const Login = () => {
   const handleGoogleLogin = () => {
     // Redirige al backend para iniciar OAuth con Google
-    window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`;
+    globalThis.location.href = `${
+      import.meta.env.VITE_API_URL
+    }/api/auth/google`;
   };
+
+  useEffect(() => {
+    toast.error("Debugging login error");
+    const params = new URLSearchParams(globalThis.location.search);
+    const error = params.get("error");
+    if (error) {
+      // debugger;
+      toast.error(error);
+    }
+  }, []);
 
   return (
     <div
