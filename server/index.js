@@ -13,7 +13,7 @@ const CLIENT_ORIGINS = process.env.CLIENT_ORIGINS.split(";;;") || [
 ];
 
 const DELAY_MS = 1200;
-const TEMPERATURE_INTERVAL_MS = 3000;
+const TEMPERATURE_INTERVAL_MS = 1500;
 
 const app = express();
 const server = createServer(app);
@@ -41,7 +41,7 @@ wss.on("connection", (ws) => {
 
     if (ws.readyState === ws.OPEN) {
       ws.send(mensaje);
-      console.log(`📊 ${mensaje}`);
+      // console.log(`📊 ${mensaje}`);
     }
   }, TEMPERATURE_INTERVAL_MS);
 

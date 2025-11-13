@@ -10,4 +10,13 @@ export const toast = {
       },
     });
   },
+  success: (message: string) => {
+    toast_.success(message, {
+      toasterId: "global",
+      style: {
+        backgroundColor: "#03993dff",
+        color: "#fff",
+      },
+    });
+  },
 };
